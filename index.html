@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Currency Converter</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <script src="/node_modules/animejs/lib/anime.min.cjs"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <style>
     body {
@@ -64,19 +63,29 @@
     }
 
     .swap-btn {
-      display: inline-block;
-      background: #5566cc;
-      color: white;
-      font-size: 20px;
-      padding: 12px 16px;
-      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: #8da2ff;
+      color: #101426;
+      font-size: 22px;
+      border-radius: 16px;
       cursor: pointer;
-      margin: 20px 0;
-      transition: background 0.3s;
+      margin: 24px 0;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 6px 20px rgba(141, 162, 255, 0.25);
     }
 
     .swap-btn:hover {
-      background: #7788ee;
+      background: #a7b6ff;
+    }
+
+    .swap-icon {
+      pointer-events: none;
+      user-select: none;
+      transform: translateY(-1px);
     }
 
     .footer {
@@ -125,7 +134,7 @@
     </div>
 
     <!-- Swap button -->
-    <div class="swap-btn" id="swap">⇅</div>
+    <div class="swap-btn" id="swap"><span class="swap-icon">↑↓</span></div>
 
     <!-- Second row -->
     <div class="row">
@@ -184,12 +193,14 @@
 
 
     function animateAmount(target) {
-      anime({
-        targets: target,
-        scale: [1.2, 1],
-        duration: 400,
-        easing: 'easeOutElastic(1, .5)'
-      });
+      if (typeof anime === "function") {
+        anime({
+          targets: target,
+          scale: [1.2, 1],
+          duration: 400,
+          easing: 'easeOutElastic(1, .5)'
+        });
+      }
     }
 
     function convert() {
@@ -209,12 +220,14 @@
 
 
     swapBtn.addEventListener("click", () => {
-      anime({
-        targets: "#swap",
-        rotate: '1turn',
-        duration: 600,
-        easing: 'easeInOutSine'
-      });
+      if (typeof anime === "function") {
+        anime({
+          targets: "#swap",
+          rotate: '1turn',
+          duration: 600,
+          easing: 'easeInOutSine'
+        });
+      }
 
       [fromCurrency.value, toCurrency.value] = [toCurrency.value, fromCurrency.value];
       convert();
@@ -222,7 +235,35 @@
 
     fromCurrency.addEventListener("change", convert);
     toCurrency.addEventListener("change", convert);
-    fromAmountInput.addEventListener("input", convert);
+
+    // UI animations on load
+    if (typeof anime === "function") {
+      anime({
+        targets: '.row',
+        opacity: [0, 1],
+        translateY: [-20, 0],
+        duration: 600,
+        delay: anime.stagger(120),
+        easing: 'easeOutQuad'
+      });
+
+      anime({
+        targets: '#swap',
+        scale: [1, 1.05],
+        duration: 1200,
+        direction: 'alternate',
+        easing: 'easeInOutSine',
+        loop: true
+      });
+
+      anime({
+        targets: '#rate-info',
+        opacity: [0, 1],
+        duration: 800,
+        delay: 500,
+        easing: 'easeOutQuad'
+      });
+    }
 
     // Init conversion
     convert();
