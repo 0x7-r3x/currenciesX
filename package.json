@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "animejs": "^4.1.3"
+  },
+  "name": "currenciesx",
+  "version": "1.0.0",
+  "description": "Minimal currencies converter for Desktop &amp; web",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0x7-r3x/currenciesX.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0x7-r3x/currenciesX/issues"
+  },
+  "homepage": "https://github.com/0x7-r3x/currenciesX#readme"
+}
