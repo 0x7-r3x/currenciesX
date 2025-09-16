@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Currency Converter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+      min-width: 280px;
+    }
+
+    .currency select {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .amount {
+      font-size: 20px;
+    }
+
+    .amount input {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      text-align: right;
+      font-family: inherit;
+      outline: none;
+      width: 100px;
+    }
+
+    .swap-btn {
+      display: inline-block;
+      background: #5566cc;
+      color: white;
+      font-size: 20px;
+      padding: 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: background 0.3s;
+    }
+
+    .swap-btn:hover {
+      background: #7788ee;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- First row -->
+    <div class="row">
+      <div class="currency">
+        🇺🇸 
+        <select id="from-currency">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="INR">INR</option>
+        </select>
+      </div>
+      <div class="amount">
+        <input type="number" id="from-amount" value="1" min="0" step="any">
+      </div>
+    </div>
+
+    <!-- Swap button -->
+    <div class="swap-btn" id="swap">⇅</div>
+
+    <!-- Second row -->
+    <div class="row">
+      <div class="currency">
+        🇮🇳 
+        <select id="to-currency">
+          <option value="INR">INR</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </div>
+      <div class="amount" id="to-amount">₹ 0</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer" id="rate-info">
+      1 USD ≈ 88.27 INR  
+      <br>Rates as of 9/16/25 by Bank Rossi
+    </div>
+  </div>
+
+  <script>
+    const fromAmountInput = document.getElementById("from-amount");
+    const toAmount = document.getElementById("to-amount");
+    const swapBtn = document.getElementById("swap");
+    const rateInfo = document.getElementById("rate-info");
+    const fromCurrency = document.getElementById("from-currency");
+    const toCurrency = document.getElementById("to-currency");
+
+    // Static fake conversion rates
+    const rates = {
+      "USDINR": 88.27,
+      "INRUSD": 0.011,
+      "USDEUR": 0.92,
+      "EURUSD": 1.09,
+      "EURINR": 95.12,
+      "INREUR": 0.010
+    };
+
+    function animateAmount(target) {
+      anime({
+        targets: target,
+        scale: [1.2, 1],
+        duration: 400,
+        easing: 'easeOutElastic(1, .5)'
+      });
+    }
+
+    function convert() {
+      const key = fromCurrency.value + toCurrency.value;
+      const rate = rates[key] || 1;
+
+      const baseValue = parseFloat(fromAmountInput.value) || 0;
+      const result = (baseValue * rate).toFixed(2);
+
+      toAmount.textContent = 
+        (toCurrency.value === "USD" ? "$ " : toCurrency.value === "INR" ? "₹ " : "€ ") + result;
+
+      rateInfo.innerHTML = `1 ${fromCurrency.value} ≈ ${rate} ${toCurrency.value}`;
+      animateAmount("#to-amount");
+    }
+
+    swapBtn.addEventListener("click", () => {
+      anime({
+        targets: "#swap",
+        rotate: '1turn',
+        duration: 600,
+        easing: 'easeInOutSine'
+      });
+
+      [fromCurrency.value, toCurrency.value] = [toCurrency.value, fromCurrency.value];
+      convert();
+    });
+
+    fromCurrency.addEventListener("change", convert);
+    toCurrency.addEventListener("change", convert);
+    fromAmountInput.addEventListener("input", convert);
+
+    // Init conversion
+    convert();
+  </script>
+</body>
+</html>
