@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Currency Converter</title>
@@ -19,27 +20,34 @@
 
     .container {
       text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
 
     .row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 20px 0;
-      min-width: 280px;
+      margin: 15px 0;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .currency select {
       background: transparent;
       border: none;
       color: white;
-      font-size: 20px;
+      font-size: 18px;
       outline: none;
       font-family: inherit;
+      padding: 6px;
+      min-width: 90px;
     }
 
     .amount {
+      flex: 1;
       font-size: 20px;
+      text-align: right;
     }
 
     .amount input {
@@ -50,7 +58,8 @@
       text-align: right;
       font-family: inherit;
       outline: none;
-      width: 100px;
+      width: 100%;
+      min-width: 80px;
     }
 
     .swap-btn {
@@ -58,8 +67,8 @@
       background: #5566cc;
       color: white;
       font-size: 20px;
-      padding: 15px;
-      border-radius: 15px;
+      padding: 12px 16px;
+      border-radius: 50%;
       cursor: pointer;
       margin: 20px 0;
       transition: background 0.3s;
@@ -74,14 +83,35 @@
       font-size: 12px;
       opacity: 0.7;
     }
+
+    /* Mobile friendly */
+    @media (max-width: 480px) {
+      .row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .amount {
+        text-align: center;
+      }
+
+      .amount input {
+        text-align: center;
+      }
+
+      .currency select {
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <!-- First row -->
     <div class="row">
       <div class="currency">
-        🇺🇸 
+        🇺🇸
         <select id="from-currency">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -89,7 +119,7 @@
         </select>
       </div>
       <div class="amount">
-        <input type="number" id="from-amount" value="1" min="0" step="any">
+        <input type="text" id="from-amount" value="1" inputmode="decimal" pattern="[0-9.]*">
       </div>
     </div>
 
@@ -99,7 +129,7 @@
     <!-- Second row -->
     <div class="row">
       <div class="currency">
-        🇮🇳 
+        🇮🇳
         <select id="to-currency">
           <option value="INR">INR</option>
           <option value="USD">USD</option>
@@ -111,7 +141,7 @@
 
     <!-- Footer -->
     <div class="footer" id="rate-info">
-      1 USD ≈ 88.27 INR  
+      1 USD ≈ 88.27 INR
       <br>Rates as of 9/16/25 by Bank Rossi
     </div>
   </div>
@@ -134,6 +164,24 @@
       "INREUR": 0.010
     };
 
+    // Auto focus on page load
+    fromAmountInput.focus();
+
+    // Refocus on any key press
+    document.addEventListener("keydown", (e) => {
+      if (e.key.length === 1 || e.key === "Backspace" || e.key === "Delete") {
+        fromAmountInput.focus();
+      }
+    });
+
+    // Allow only numbers and dot
+    fromAmountInput.addEventListener("input", () => {
+      fromAmountInput.value = fromAmountInput.value.replace(/[^0-9.]/g, "");
+      convert(); // trigger conversion instantly
+    });
+
+
+
     function animateAmount(target) {
       anime({
         targets: target,
@@ -147,15 +195,17 @@
       const key = fromCurrency.value + toCurrency.value;
       const rate = rates[key] || 1;
 
-      const baseValue = parseFloat(fromAmountInput.value) || 0;
+      // Parse safely
+      const baseValue = parseFloat(fromAmountInput.value.replace(/[^0-9.]/g, "")) || 0;
       const result = (baseValue * rate).toFixed(2);
 
-      toAmount.textContent = 
+      toAmount.textContent =
         (toCurrency.value === "USD" ? "$ " : toCurrency.value === "INR" ? "₹ " : "€ ") + result;
 
       rateInfo.innerHTML = `1 ${fromCurrency.value} ≈ ${rate} ${toCurrency.value}`;
       animateAmount("#to-amount");
     }
+
 
     swapBtn.addEventListener("click", () => {
       anime({
@@ -177,4 +227,5 @@
     convert();
   </script>
 </body>
+
 </html>
