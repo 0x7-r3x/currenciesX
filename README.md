@@ -1,47 +1,57 @@
-# CurrenciesX
+CurrenciesX
+A sleek, minimal currency converter for desktop and web, built with Electron for quick and elegant currency conversions.
 
-A sleek and minimal currency converter for desktop and web. Built with Electron, this application provides a simple and elegant solution for quick currency conversions right from your desktop.
+✨ Features
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x7-r3x/currenciesX)
+Minimalist Interface: Clean, intuitive design for effortless use.
+Real-time Conversion: Instant results as you type.
+Smooth Animations: Polished UI with Anime.js.
+Lightweight: Efficient and fast, built with Electron.
+Cross-Platform: Supports Windows, macOS, and Linux.
+Supported Currencies: USD, EUR, INR.
 
-## ✨ Features
+🚀 Getting Started
+For Users
+Download the latest installer from the Releases page (e.g., currenciesX-1.0.0.exe for Windows).
+For Developers
+To contribute or build from source:
+Prerequisites:
 
-* **Minimalist Interface:** Clean, intuitive, and easy-to-use design.
-* **Real-time Conversion:** Get instant results as you type.
-* **Interactive UI:** Smooth animations for a polished user experience, powered by Anime.js.
-* **Lightweight:** A small and efficient application built with the Electron framework.
-* **Cross-Platform:** The same codebase can be used to build for Windows, macOS, and Linux.
-* **Current Supported Currencies:** USD, EUR, INR.
+Node.js
+Git
 
-## 🚀 Getting Started
+Installation:
 
-### For End-Users
+Clone the repository:git clone https://github.com/0x7-r3x/currenciesX.git
 
-To download and install the desktop application, simply visit the **[Releases page](https://github.com/0x7-r3x/currenciesX/releases)** and download the latest installer file (e.g., `currenciesX-1.0.0.exe` for Windows).
 
-### For Developers
+Navigate to the project directory:cd currenciesX
 
-If you want to contribute to the project or build the app from the source code, follow these steps.
 
-**Prerequisites:**
-* [Node.js](https://nodejs.org/) installed on your machine.
-* Git installed on your machine.
+Install dependencies:npm install
 
-**Installation:**
-1.  Clone the repository to your local machine:
-    ```sh
-    git clone [https://github.com/0x7-r3x/currenciesX.git](https://github.com/0x7-r3x/currenciesX.git)
-    ```
-2.  Navigate to the project directory:
-    ```sh
-    cd currenciesX
-    ```
-3.  Install the required dependencies:
-    ```sh
-    npm install
-    ```
 
-**Running the Application:**
-To run the app in development mode:
-```sh
+
+Running:
 npm start
+
+Building:To create a Windows executable:
+npm run make
+
+Output will be in the out directory.
+💻 Tech Stack
+
+HTML, CSS, JavaScript: Core web technologies.
+Electron: Desktop app framework.
+Anime.js: Lightweight animation library.
+
+📄 License
+Licensed under the ISC License. See LICENSE.md for details.
+🙏 Acknowledgements
+
+Anime.js for animations.
+Electron for the desktop framework.
+Contributors and users for valuable feedback.
+
+✍️ Author
+CurrenciesX is an open-source project by Rex. Find me on GitHub.
