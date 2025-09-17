@@ -4,11 +4,15 @@
   },
   "name": "currenciesx",
   "version": "1.0.0",
-  "description": "Minimal currencies converter for Desktop &amp; web",
-  "main": "index.js",
-  "devDependencies": {},
+  "description": "Minimal currencies converter for Desktop & web",
+  "main": "main.js",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.9.0",
+    "electron": "^38.1.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
